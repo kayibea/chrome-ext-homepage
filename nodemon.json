@@ -1,0 +1,5 @@
+{
+  "watch": ["src", "public", "vite.config.ts"],
+  "ext": "ts,svelte,json,css,html",
+  "exec": "npm run build"
+}
