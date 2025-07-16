@@ -82,7 +82,7 @@
     </div>
   </div>
 
-  <video autoplay loop muted playsinline src="background.mp4" class="video-background"></video>
+  <video autoplay loop muted playsinline src="assets/background.mp4" class="video-background"></video>
   <div class="background-overlay"></div>
 </main>
 
