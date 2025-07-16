@@ -19,26 +19,21 @@
   function onKeyDown(ev: Event) {
     const e = ev as KeyboardEvent;
     const input = e.target as HTMLInputElement;
-    const key = e.code;
 
-    // console.log(key);
-    if (key === 'Enter' && input.value.length > 1) {
-      return doSearch(input.value, site);
+    if (e.code === 'Enter' && input.value.length > 0) {
+      doSearch(input.value, site);
     }
 
-    if (key === 'Backspace' && site) {
+    if (e.code === 'Backspace' && site && input.value.length === 0) {
       input.value = `${site.shortcut}  `;
       site = null;
       return;
-    }
-
-    if (key === 'Space' && !site) {
-      const [shortcut, ...rest] = input.value.split(' ');
-      if (rest.length > 1) return;
-
-      const matchedSite = sites.find((s) => s.shortcut === shortcut);
-      if (matchedSite) {
-        site = matchedSite;
+    } else if (e.code === 'Space' && !site) {
+      const data = input.value.split(' ');
+      if (data.length >= 2) return;
+      const find = sites.find((s) => s.shortcut === data[0]);
+      if (find) {
+        site = find;
         input.value = '';
       }
     }
@@ -54,10 +49,10 @@
     let timeoutId: ReturnType<typeof setTimeout>;
     let intervalId: ReturnType<typeof setInterval>;
 
-    const delay = 60_000 - (now.getSeconds() * 1000 + now.getMilliseconds());
+    const delay = 60 * 1000 - (now.getSeconds() * 1000 + now.getMilliseconds());
     timeoutId = setTimeout(() => {
       now = new Date();
-      intervalId = setInterval(() => (now = new Date()), 60_000);
+      intervalId = setInterval(() => (now = new Date()), 60 * 1000);
     }, delay);
 
     return () => {
@@ -75,7 +70,7 @@
       <span id="shortcutLabel" class="shortcut-label"
         >{#if site}Search {site.name} |{/if}</span
       >
-      <input minlength="1" onkeydown={onKeyDown} type="text" id="searchInput" placeholder="Type shortcut..." />
+      <input minlength="1" onkeydown={onKeyDown} type="text" id="searchInput" placeholder="Search the web..." />
     </div>
     <!-- TODO: Maybe, i said maybe implement preview ! (not sure, kinda pointless) -->
     <!-- <div id="siteList"></div> -->
