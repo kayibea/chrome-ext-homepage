@@ -1,1 +1,1 @@
-> My custom simple homepage
+> My custom homepage
