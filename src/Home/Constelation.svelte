@@ -3,6 +3,8 @@
   import { onMount } from 'svelte';
   import PerfMon from 'utils/PerfMon';
 
+  import type { Props } from 'types';
+
   type Point = {
     x: number;
     y: number;
@@ -10,10 +12,8 @@
     vy: number;
   };
 
-  type Props = {
-    width: number;
-    height: number;
-  };
+  const FPS_TARGET = 33;
+  const FRAME_DURATION = 1000 / FPS_TARGET;
 
   const { width, height }: Props = $props();
 
@@ -33,16 +33,18 @@
     return () => window.cancelAnimationFrame(animationFrameId);
   });
 
-  let lastTimestamp = 0;
+  let lastTime = 0;
   function animatePoints(timestamp: number) {
-    if (!lastTimestamp) lastTimestamp = timestamp;
-    const dt = timestamp - lastTimestamp;
-    lastTimestamp = timestamp;
+    if (!lastTime) lastTime = timestamp;
+    const dt = timestamp - lastTime;
+    if (dt <= FRAME_DURATION) return window.requestAnimationFrame(animatePoints);
 
     updatePoints();
     perfMon.update(dt);
     drawPoints();
     perfMon.draw(ctx);
+
+    lastTime = timestamp - (dt % FRAME_DURATION);
     animationFrameId = window.requestAnimationFrame(animatePoints);
   }
 
