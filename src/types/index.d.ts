@@ -1,1 +1,4 @@
-export type Nullable<T> = T | null;
+export type Props = {
+  width: number;
+  height: number;
+};
