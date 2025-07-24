@@ -88,14 +88,6 @@
     }
 
     // Draw points
-    // for (const p of points) {
-    //   ctx.fillStyle = '#ffffff';
-    //   ctx.beginPath();
-    //   ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-    //   ctx.fill();
-    // }
-
-    // Draw points
     const radius = 2;
     ctx.beginPath();
     ctx.fillStyle = '#ffffff';
