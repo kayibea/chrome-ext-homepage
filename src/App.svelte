@@ -1,9 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import Constelation from 'Home/Constelation.svelte';
-  import Matrix from 'Home/Matrix.svelte';
-  import Constelation2 from 'Home/Constelation2.svelte';
-  // import Menu from 'Components/Menu.svelte';
+  import { backgrounds } from 'Home';
 
   let [width, height] = $state([window.innerWidth, window.innerHeight]);
   const abortController = new AbortController();
@@ -12,6 +9,8 @@
     width = window.innerWidth;
     height = window.innerHeight;
   }
+
+  const Background = backgrounds[Math.floor(Math.random() * backgrounds.length)];
 
   onMount(() => {
     window.addEventListener('resize', handleResize, { signal: abortController.signal });
@@ -23,7 +22,5 @@
 </script>
 
 <main>
-  <!-- <Constelation {width} {height} /> -->
-  <!-- <Matrix {width} {height} /> -->
-  <Constelation2 {width} {height} />
+  <Background {width} {height} />
 </main>
