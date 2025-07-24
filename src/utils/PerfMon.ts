@@ -20,7 +20,7 @@ export default class PerfMon {
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, 40, 20);
     ctx.fillStyle = 'white';
-    ctx.font = 'bold 15px Roboto';
+    ctx.font = 'bold 12px Roboto';
     ctx.fillText(this.fps.toFixed(0), 5, 15);
   }
 }
