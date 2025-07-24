@@ -52,10 +52,10 @@
 
     ctx.clearRect(0, 0, width, height);
     updateStars();
-    // perfM.update(dt);
+    perfM.update(dt);
     drawConnections();
     drawStars();
-    // perfM.draw(ctx);
+    perfM.draw(ctx);
 
     lastTime = timestamp - (dt % FRAME_DURATION);
     animationFrameId = window.requestAnimationFrame(animateStarts);
@@ -92,6 +92,7 @@
   }
 
   function drawStars() {
+    ctx.save();
     for (const star of stars) {
       ctx.beginPath();
       ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
@@ -100,6 +101,7 @@
       ctx.shadowBlur = 5;
       ctx.fill();
     }
+    ctx.restore();
   }
 
   function drawConnections() {

@@ -31,7 +31,7 @@
     const dt = timestamp - lastTime;
     if (dt <= FRAME_DURATION) return requestAnimationFrame(animate);
 
-    // perfM.update(dt);
+    perfM.update(dt);
 
     ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
     ctx.fillRect(0, 0, width, height);
@@ -52,7 +52,7 @@
 
       drops[i]++;
     }
-    // perfM.draw(ctx);
+    perfM.draw(ctx);
     lastTime = timestamp - (dt % FRAME_DURATION);
     animationFrameId = requestAnimationFrame(animate);
   }
