@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { TWO_PI } from 'constant';
   import { onMount } from 'svelte';
   import type { Props } from 'types';
   import PerfMon from 'utils/PerfMon';
@@ -95,7 +96,7 @@
     ctx.save();
     for (const star of stars) {
       ctx.beginPath();
-      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.arc(star.x, star.y, star.radius, 0, TWO_PI);
       ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
       ctx.shadowColor = '#fff';
       ctx.shadowBlur = 5;

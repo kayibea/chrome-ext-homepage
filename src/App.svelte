@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { backgrounds } from 'Home';
+  import Constelation from 'Home/Constelation.svelte';
 
   let [width, height] = $state([window.innerWidth, window.innerHeight]);
   const abortController = new AbortController();
@@ -14,13 +15,12 @@
 
   onMount(() => {
     window.addEventListener('resize', handleResize, { signal: abortController.signal });
-
-    return () => {
-      abortController.abort();
-    };
+    return () => abortController.abort();
   });
 </script>
 
 <main>
   <Background {width} {height} />
+  <!-- <Constelation {width} {height} /> -->
+  <!-- <img src="assets/img/nebula.jpg" alt="" /> -->
 </main>
