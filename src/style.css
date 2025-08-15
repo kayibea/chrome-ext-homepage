@@ -11,3 +11,8 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   overflow: hidden;
 }
+
+canvas {
+  display: block;
+  background: black;
+}
