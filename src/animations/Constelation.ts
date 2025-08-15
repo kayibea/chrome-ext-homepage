@@ -1,0 +1,93 @@
+import { TWO_PI } from 'constant';
+import Animation2D from './Animation2D';
+
+type Star = {
+  x: number;
+  y: number;
+  readonly vx: number;
+  readonly vy: number;
+  readonly radius: number;
+  readonly opacity: number;
+};
+
+export default class Constelation extends Animation2D {
+  private static readonly maxStars = 200;
+  private static readonly maxJoinDistance = 100;
+  private stars: Star[];
+
+  public constructor() {
+    super();
+    this.stars = Array.from({ length: Constelation.maxStars }, () => Constelation.spawnStar());
+  }
+
+  public draw(ctx: CanvasRenderingContext2D): void {
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+    for (const star of this.stars) {
+      this.updateStar(star);
+      this.drawStar(ctx, star);
+    }
+
+    this.drawStarConnections(ctx);
+  }
+
+  private updateStar(star: Star): void {
+    star.x += star.vx;
+    star.y += star.vy;
+
+    // Wrap around edges
+    if (star.x < 0) star.x = window.innerWidth;
+    if (star.x > window.innerWidth) star.x = 0;
+    if (star.y < 0) star.y = window.innerHeight;
+    if (star.y > window.innerHeight) star.y = 0;
+  }
+
+  private drawStar(ctx: CanvasRenderingContext2D, star: Star) {
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.radius, 0, TWO_PI);
+    ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+    ctx.shadowColor = '#fff';
+    ctx.shadowBlur = 5;
+    ctx.fill();
+  }
+
+  private drawStarConnections(ctx: CanvasRenderingContext2D): void {
+    for (let i = 0; i < this.stars.length; i++) {
+      for (let j = i + 1; j < this.stars.length; j++) {
+        const dx = this.stars[i].x - this.stars[j].x;
+        const dy = this.stars[i].y - this.stars[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < Constelation.maxJoinDistance) {
+          const alpha = 1 - dist / Constelation.maxJoinDistance;
+          ctx.beginPath();
+          ctx.moveTo(this.stars[i].x, this.stars[i].y);
+          ctx.lineTo(this.stars[j].x, this.stars[j].y);
+          ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.3})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  private static spawnStar(x = Math.random() * window.innerWidth, y = Math.random() * window.innerHeight): Star {
+    return {
+      x,
+      y,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+      radius: Math.random() * 2 + 1,
+      opacity: Math.random() * 0.5 + 0.5,
+    };
+  }
+
+  private handleCanvasClick(e: MouseEvent): void {
+    console.log('click !');
+    this.stars.push(Constelation.spawnStar(e.clientX, e.clientY));
+  }
+
+  public setupListeners(): void {
+    window.addEventListener('click', (e: MouseEvent) => this.handleCanvasClick(e));
+  }
+}
