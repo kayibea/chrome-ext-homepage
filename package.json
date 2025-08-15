@@ -1,5 +1,6 @@
 {
   "name": "chrome-ext-homepage",
+  "description": "Custom homepage for new tabs, replacing the default Chrome new tab page.",
   "private": true,
   "version": "0.0.0",
   "type": "module",
