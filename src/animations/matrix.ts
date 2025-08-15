@@ -5,7 +5,7 @@ const chars =
 const dropLen = Math.floor(window.innerWidth / fontSize);
 const drops = Array<number>(dropLen).fill(dropLen * fontSize);
 
-export const matrix = (ctx: CanvasRenderingContext2D): void => {
+export default function matrix(ctx: CanvasRenderingContext2D): void {
   ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
   ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
@@ -25,4 +25,4 @@ export const matrix = (ctx: CanvasRenderingContext2D): void => {
 
     drops[i]++;
   }
-};
+}
