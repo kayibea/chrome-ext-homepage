@@ -138,10 +138,6 @@
 <style>
   canvas {
     display: block;
-    /* background: #000; */
-    /* background-image: url(assets/img/nebula.jpg); */
-    background-image: url(assets/img/nebula.jpg);
-    background-size: cover;
-    /* background-repeat: no-repeat; */
+    background-color: black;
   }
 </style>
