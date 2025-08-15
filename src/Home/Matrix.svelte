@@ -1,8 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import type { Props } from 'types';
   import PerfMon from 'utils/PerfMon';
 
-  const { width, height } = $props();
+  const { width, height }: Props = $props();
 
   const FPS_TARGET = 33;
   const FRAME_DURATION = 1000 / FPS_TARGET;
