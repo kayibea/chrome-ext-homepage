@@ -1,4 +1,4 @@
-const fontSize = 14;
+const fontSize = 20;
 const chars =
   'アァイィウヴエカキクケコサシスセソタチツテトナニヌネノハヒフヘホ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
