@@ -5,7 +5,7 @@ const clazzs = [
   Constelation,
   Matrix,
   //
-];
+] as const;
 
 const index = Math.floor(Math.random() * clazzs.length);
 const clazz = clazzs[index];
