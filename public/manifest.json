@@ -2,8 +2,8 @@
   "$schema": "https://json.schemastore.org/chrome-manifest.json",
   "manifest_version": 3,
   "name": "Homepage",
-  "version": "1.0",
-  "permissions": ["tabs"],
+  "description": "Custom homepage for new tabs, replacing the default Chrome new tab page.",
+  "version": "1.0.1",
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
@@ -12,5 +12,7 @@
     "32": "icons/icon32.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
-  }
+  },
+  "permissions": [],
+  "offline_enabled": true
 }

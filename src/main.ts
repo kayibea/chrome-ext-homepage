@@ -1,9 +1,4 @@
-import { mount } from "svelte";
-import "./style.css";
-import App from "./App.svelte";
+import './style.css';
+import canvas from 'animations';
 
-const app = mount(App, {
-  target: document.getElementById("app")!,
-});
-
-export default app;
+document.body.appendChild(canvas);
