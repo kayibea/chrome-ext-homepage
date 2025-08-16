@@ -1,20 +1,16 @@
 import Matrix from './Matrix';
 import Constelation from './Constelation';
 
-const animations = [
+const clazzs = [
   Constelation,
   Matrix,
   //
-] as const;
+];
 
-// const animations = [
-//   Matrix,
-//   //
-// ];
+const index = Math.floor(Math.random() * clazzs.length);
+const clazz = clazzs[index];
 
-const index = Math.floor(Math.random() * animations.length);
-const animation = new animations[index]();
+customElements.define(clazz.customName, clazz as any, { extends: 'canvas' });
 
-animation.setupListeners();
-
-export default animation;
+const canvas = document.createElement('canvas', { is: clazz.customName });
+export default canvas;
