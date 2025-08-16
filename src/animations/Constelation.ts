@@ -15,7 +15,7 @@ export default class Constelation extends AnimatedCanvas {
   private readonly maxJoinDistance: number;
   private readonly stars: Star[];
 
-  public constructor() {
+  private constructor() {
     super();
     this.maxStars = 200;
     this.maxJoinDistance = 100;
