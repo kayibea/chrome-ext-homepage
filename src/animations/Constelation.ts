@@ -22,7 +22,7 @@ export default class Constelation extends AnimatedCanvas {
     this.stars = Array.from({ length: this.maxStars }, () => this.spawnStar());
   }
 
-  public draw(): void {
+  protected draw(): void {
     const ctx = this.ctx;
 
     ctx.clearRect(0, 0, this.width, this.height);
