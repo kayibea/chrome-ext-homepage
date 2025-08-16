@@ -1,5 +1,5 @@
 import { TWO_PI } from 'constant';
-import Animation2D from './Animation2D';
+import AnimatedCanvas from './AnimatedCanvas';
 
 type Star = {
   x: number;
@@ -10,25 +10,29 @@ type Star = {
   readonly opacity: number;
 };
 
-export default class Constelation extends Animation2D {
-  private static readonly maxStars = 200;
-  private static readonly maxJoinDistance = 100;
-  private stars: Star[];
+export default class Constelation extends AnimatedCanvas {
+  private readonly maxStars: number;
+  private readonly maxJoinDistance: number;
+  private readonly stars: Star[];
 
   public constructor() {
     super();
-    this.stars = Array.from({ length: Constelation.maxStars }, () => Constelation.spawnStar());
+    this.maxStars = 200;
+    this.maxJoinDistance = 100;
+    this.stars = Array.from({ length: this.maxStars }, () => this.spawnStar());
   }
 
-  public draw(ctx: CanvasRenderingContext2D): void {
-    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  public draw(): void {
+    const ctx = this.ctx;
+
+    ctx.clearRect(0, 0, this.width, this.height);
 
     for (const star of this.stars) {
       this.updateStar(star);
-      this.drawStar(ctx, star);
+      this.drawStar(star);
     }
 
-    this.drawStarConnections(ctx);
+    this.drawStarsConnections();
   }
 
   private updateStar(star: Star): void {
@@ -36,13 +40,15 @@ export default class Constelation extends Animation2D {
     star.y += star.vy;
 
     // Wrap around edges
-    if (star.x < 0) star.x = window.innerWidth;
-    if (star.x > window.innerWidth) star.x = 0;
-    if (star.y < 0) star.y = window.innerHeight;
-    if (star.y > window.innerHeight) star.y = 0;
+    if (star.x < 0) star.x = this.width;
+    if (star.x > this.width) star.x = 0;
+    if (star.y < 0) star.y = this.height;
+    if (star.y > this.height) star.y = 0;
   }
 
-  private drawStar(ctx: CanvasRenderingContext2D, star: Star) {
+  private drawStar(star: Star) {
+    const ctx = this.ctx;
+
     ctx.beginPath();
     ctx.arc(star.x, star.y, star.radius, 0, TWO_PI);
     ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
@@ -51,15 +57,17 @@ export default class Constelation extends Animation2D {
     ctx.fill();
   }
 
-  private drawStarConnections(ctx: CanvasRenderingContext2D): void {
+  private drawStarsConnections(): void {
+    const ctx = this.ctx;
+
     for (let i = 0; i < this.stars.length; i++) {
       for (let j = i + 1; j < this.stars.length; j++) {
         const dx = this.stars[i].x - this.stars[j].x;
         const dy = this.stars[i].y - this.stars[j].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < Constelation.maxJoinDistance) {
-          const alpha = 1 - dist / Constelation.maxJoinDistance;
+        if (dist < this.maxJoinDistance) {
+          const alpha = 1 - dist / this.maxJoinDistance;
           ctx.beginPath();
           ctx.moveTo(this.stars[i].x, this.stars[i].y);
           ctx.lineTo(this.stars[j].x, this.stars[j].y);
@@ -71,7 +79,7 @@ export default class Constelation extends Animation2D {
     }
   }
 
-  private static spawnStar(x = Math.random() * window.innerWidth, y = Math.random() * window.innerHeight): Star {
+  private spawnStar(x = Math.random() * window.innerWidth, y = Math.random() * window.innerHeight): Star {
     return {
       x,
       y,
@@ -84,10 +92,11 @@ export default class Constelation extends Animation2D {
 
   private handleCanvasClick(e: MouseEvent): void {
     console.log('click !');
-    this.stars.push(Constelation.spawnStar(e.clientX, e.clientY));
+    this.stars.push(this.spawnStar(e.clientX, e.clientY));
   }
 
-  public setupListeners(): void {
-    window.addEventListener('click', (e: MouseEvent) => this.handleCanvasClick(e));
+  protected setupListeners(): void {
+    super.setupListeners();
+    this.addEventListener('click', (e: MouseEvent) => this.handleCanvasClick(e));
   }
 }
