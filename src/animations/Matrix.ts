@@ -7,7 +7,7 @@ export default class Matrix extends AnimatedCanvas {
   private readonly fontSize = 20;
   private readonly drops: number[];
 
-  public constructor() {
+  private constructor() {
     super();
     const dropLen = Math.floor(window.innerWidth / this.fontSize);
     this.drops = Array<number>(dropLen).fill(dropLen * this.fontSize);
