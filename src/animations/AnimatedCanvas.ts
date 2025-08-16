@@ -8,7 +8,7 @@ export default abstract class AnimatedCanvas extends HTMLCanvasElement {
   protected readonly ctx: CanvasRenderingContext2D;
   private readonly loopFn: typeof this.loop;
 
-  public constructor() {
+  protected constructor() {
     super();
     this.lastTime = 0;
     this.fpsInterval = 1000 / 60;
