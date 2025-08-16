@@ -1,5 +1,3 @@
-export type AnimatedCanvasCtor = (...params: any) => HTMLElement;
-
 export default abstract class AnimatedCanvas extends HTMLCanvasElement {
   public static readonly customName = 'animated-canvas';
   private lastTime: number;
