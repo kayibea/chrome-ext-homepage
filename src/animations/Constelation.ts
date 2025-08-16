@@ -59,25 +59,86 @@ export default class Constelation extends AnimatedCanvas {
 
   private drawStarsConnections(): void {
     const ctx = this.ctx;
+    const cellSize = this.maxJoinDistance;
+    const cols = Math.ceil(this.width / cellSize);
+    const rows = Math.ceil(this.height / cellSize);
 
-    for (let i = 0; i < this.stars.length; i++) {
-      for (let j = i + 1; j < this.stars.length; j++) {
-        const dx = this.stars[i].x - this.stars[j].x;
-        const dy = this.stars[i].y - this.stars[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+    // one flat array of buckets
+    const buckets: Star[][] = Array.from({ length: cols * rows }, () => []);
 
-        if (dist < this.maxJoinDistance) {
-          const alpha = 1 - dist / this.maxJoinDistance;
-          ctx.beginPath();
-          ctx.moveTo(this.stars[i].x, this.stars[i].y);
-          ctx.lineTo(this.stars[j].x, this.stars[j].y);
-          ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.3})`;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
+    // put stars into buckets
+    for (const star of this.stars) {
+      const col = Math.floor(star.x / cellSize);
+      const row = Math.floor(star.y / cellSize);
+      const index = row * cols + col;
+      buckets[index].push(star);
+    }
+
+    // check connections
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        const index = row * cols + col;
+        const bucket = buckets[index];
+
+        if (bucket.length === 0) continue;
+
+        // collect this bucket + 8 neighbors
+        const neighbors: Star[] = [];
+        for (let r = row - 1; r <= row + 1; r++) {
+          for (let c = col - 1; c <= col + 1; c++) {
+            if (r < 0 || r >= rows || c < 0 || c >= cols) continue;
+            neighbors.push(...buckets[r * cols + c]);
+          }
+        }
+
+        // connect stars
+        for (const star of bucket) {
+          for (const other of neighbors) {
+            if (star === other) continue;
+
+            const dx = star.x - other.x;
+            if (Math.abs(dx) > this.maxJoinDistance) continue;
+
+            const dy = star.y - other.y;
+            if (Math.abs(dy) > this.maxJoinDistance) continue;
+
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < this.maxJoinDistance) {
+              const alpha = 1 - dist / this.maxJoinDistance;
+              ctx.beginPath();
+              ctx.moveTo(star.x, star.y);
+              ctx.lineTo(other.x, other.y);
+              ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.3})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
         }
       }
     }
   }
+
+  // private drawStarsConnections(): void {
+  //   const ctx = this.ctx;
+
+  //   for (let i = 0; i < this.stars.length; i++) {
+  //     for (let j = i + 1; j < this.stars.length; j++) {
+  //       const dx = this.stars[i].x - this.stars[j].x;
+  //       const dy = this.stars[i].y - this.stars[j].y;
+  //       const dist = Math.sqrt(dx * dx + dy * dy);
+
+  //       if (dist < this.maxJoinDistance) {
+  //         const alpha = 1 - dist / this.maxJoinDistance;
+  //         ctx.beginPath();
+  //         ctx.moveTo(this.stars[i].x, this.stars[i].y);
+  //         ctx.lineTo(this.stars[j].x, this.stars[j].y);
+  //         ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.3})`;
+  //         ctx.lineWidth = 0.5;
+  //         ctx.stroke();
+  //       }
+  //     }
+  //   }
+  // }
 
   private spawnStar(x = Math.random() * window.innerWidth, y = Math.random() * window.innerHeight): Star {
     return {
