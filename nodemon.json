@@ -1,5 +1,5 @@
 {
-  "watch": ["src", "public"],
+  "watch": ["src", "public", "index.html"],
   "ext": "ts,json,css,html",
   "exec": "npm run build"
 }
