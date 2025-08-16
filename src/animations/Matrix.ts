@@ -1,20 +1,20 @@
-import Animation2D from './Animation2D';
+import AnimatedCanvas from './AnimatedCanvas';
 
 const chars =
   'アァイィウヴエカキクケコサシスセソタチツテトナニヌネノハヒフヘホ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-export default class Matrix extends Animation2D {
+export default class Matrix extends AnimatedCanvas {
   private readonly fontSize = 20;
-  private readonly dropLen: number;
   private readonly drops: number[];
 
   public constructor() {
     super();
-    this.dropLen = Math.floor(window.innerWidth / this.fontSize);
-    this.drops = Array<number>(this.dropLen).fill(this.dropLen * this.fontSize);
+    const dropLen = Math.floor(window.innerWidth / this.fontSize);
+    this.drops = Array<number>(dropLen).fill(dropLen * this.fontSize);
   }
 
-  public draw(ctx: CanvasRenderingContext2D) {
+  protected draw(): void {
+    const ctx = this.ctx;
     ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
     ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
