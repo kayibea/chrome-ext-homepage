@@ -1,14 +1,20 @@
 import Matrix from './Matrix';
+import NeonRibbons from './NeonRibbons';
 import Constelation from './Constelation';
+import NeonRibbonFlow from './NeonRibbonFlow';
 
 const clazzs = [
-  Constelation,
   Matrix,
+  NeonRibbons,
+  Constelation,
+  NeonRibbonFlow,
   //
 ] as const;
 
 const index = Math.floor(Math.random() * clazzs.length);
 const clazz = clazzs[index];
+
+// const clazz = NeonRibbonFlow;
 
 customElements.define(clazz.customName, clazz as any, { extends: 'canvas' });
 
