@@ -3,7 +3,7 @@ export default abstract class AnimatedCanvas extends HTMLCanvasElement {
   private lastTime: number;
   public readonly id: string = 'canvas';
   private readonly fpsInterval: number;
-  protected readonly ctx: CanvasRenderingContext2D;
+  protected readonly canvasCtx: CanvasRenderingContext2D;
   private readonly loopFn: typeof this.loop;
 
   protected constructor() {
@@ -12,7 +12,7 @@ export default abstract class AnimatedCanvas extends HTMLCanvasElement {
     this.fpsInterval = 1000 / 60;
     this.width = window.innerWidth;
     this.height = window.innerHeight;
-    this.ctx = this.getContext('2d')!;
+    this.canvasCtx = this.getContext('2d')!;
 
     this.loopFn = this.loop.bind(this);
   }
