@@ -1,16 +1,22 @@
 import AnimatedCanvas from './AnimatedCanvas';
+import { KATAKANA_ALNUM_CHARS } from 'constant';
 
-const chars =
-  'アァイィウヴエカキクケコサシスセソタチツテトナニヌネノハヒフヘホ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const chars = KATAKANA_ALNUM_CHARS.split('');
 
 export default class Matrix extends AnimatedCanvas {
   private readonly fontSize = 20;
-  private readonly drops: number[];
+  private readonly drops: Uint16Array;
 
   private constructor() {
     super();
+
     const dropLen = Math.floor(window.innerWidth / this.fontSize);
-    this.drops = Array<number>(dropLen).fill(dropLen * this.fontSize);
+    const dataArray = new Uint16Array(dropLen);
+    for (let i = 0; i < dropLen; i++)
+      //
+      dataArray[i] = dropLen * this.fontSize;
+
+    this.drops = dataArray;
   }
 
   protected draw(): void {
