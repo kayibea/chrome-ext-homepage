@@ -23,9 +23,8 @@ export default class NeonRibbons extends AnimatedCanvas {
   }
 
   protected draw() {
-    const ctx = this.ctx;
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; // trails
-    ctx.fillRect(0, 0, this.width, this.height);
+    this.canvasCtx.fillStyle = 'rgba(0, 0, 0, 0.1)'; // trails
+    this.canvasCtx.fillRect(0, 0, this.width, this.height);
 
     for (const p of this.points) {
       // move point along angle
@@ -43,11 +42,11 @@ export default class NeonRibbons extends AnimatedCanvas {
 
       // glowing neon color
       const hue = (Date.now() / 50 + p.x + p.y) % 360;
-      ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+      this.canvasCtx.fillStyle = `hsl(${hue}, 100%, 50%)`;
 
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
-      ctx.fill();
+      this.canvasCtx.beginPath();
+      this.canvasCtx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+      this.canvasCtx.fill();
     }
   }
 }

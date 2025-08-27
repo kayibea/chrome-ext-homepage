@@ -47,19 +47,18 @@ export default class NeonRibbonFlow extends AnimatedCanvas {
   }
 
   protected draw() {
-    const ctx = this.ctx;
     // semi-transparent overlay for trails
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-    ctx.fillRect(0, 0, this.width, this.height);
+    this.canvasCtx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+    this.canvasCtx.fillRect(0, 0, this.width, this.height);
 
     for (const p of this.particles) {
       p.update(this.mouseX, this.mouseY);
 
       // glowing particle
-      ctx.fillStyle = `hsl(${(p.x + p.y + Date.now() / 10) % 360}, 100%, 50%)`;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fill();
+      this.canvasCtx.fillStyle = `hsl(${(p.x + p.y + Date.now() / 10) % 360}, 100%, 50%)`;
+      this.canvasCtx.beginPath();
+      this.canvasCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      this.canvasCtx.fill();
     }
   }
 }
