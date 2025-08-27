@@ -1,4 +1,4 @@
-# Homepage
+# Sweet Home
 
 A simple Chrome extension that replaces the default new tab page with an animated canvas.
 
