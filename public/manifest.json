@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/chrome-manifest.json",
   "manifest_version": 3,
-  "name": "Homepage",
+  "name": "Sweet Home",
   "description": "Custom homepage for new tabs, replacing the default Chrome new tab page.",
   "version": "1.0.1",
   "chrome_url_overrides": {
