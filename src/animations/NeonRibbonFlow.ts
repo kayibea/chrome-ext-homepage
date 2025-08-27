@@ -1,12 +1,12 @@
 import AnimatedCanvas from './AnimatedCanvas';
 
 class Particle {
-  vx = 0;
-  vy = 0;
+  public vx = 0;
+  public vy = 0;
 
   constructor(public x: number, public y: number, public size: number = 3) {}
 
-  update(targetX: number, targetY: number) {
+  public update(targetX: number, targetY: number) {
     const dx = targetX - this.x;
     const dy = targetY - this.y;
     const dist = Math.sqrt(dx * dx + dy * dy);
