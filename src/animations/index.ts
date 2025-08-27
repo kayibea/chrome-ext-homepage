@@ -1,13 +1,11 @@
 import Matrix from './Matrix';
 import NeonRibbons from './NeonRibbons';
 import Constelation from './Constelation';
-import NeonRibbonFlow from './NeonRibbonFlow';
 
 const clazzs = [
   Matrix,
   NeonRibbons,
   Constelation,
-  NeonRibbonFlow,
   //
 ] as const;
 
