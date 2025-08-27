@@ -1,25 +1,21 @@
 import AnimatedCanvas from './AnimatedCanvas';
 
 class RibbonPoint {
-  constructor(public x: number, public y: number, public angle: number, public speed: number) {}
+  constructor(
+    public x = Math.random() * window.innerWidth,
+    public y = Math.random() * window.innerHeight,
+    public angle = Math.random() * (Math.PI * 2),
+    public speed = 0.5 + Math.random() * 1.5,
+  ) {}
 }
 
 export default class NeonRibbons extends AnimatedCanvas {
-  private readonly points: RibbonPoint[] = [];
-  private readonly count = 50;
+  private readonly points: RibbonPoint[];
+  private readonly maxPoints = 50;
 
   private constructor() {
     super();
-    for (let i = 0; i < this.count; i++) {
-      this.points.push(
-        new RibbonPoint(
-          Math.random() * this.width,
-          Math.random() * this.height,
-          Math.random() * Math.PI * 2,
-          0.5 + Math.random() * 1.5,
-        ),
-      );
-    }
+    this.points = Array.from({ length: this.maxPoints }, () => new RibbonPoint());
   }
 
   protected draw() {
